@@ -1,7 +1,7 @@
 <?php
 $servidor = "localhost";
-$usuario = "root"; // ajuste para seu servidor MySQL
-$senha = ""; // ajuste para sua senha do MySQL
+$usuario = "root"; 
+$senha = "";
 $banco = "desenvolvimentoweb";
 
 $conexao = new mysqli($servidor, $usuario, $senha, $banco);
