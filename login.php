@@ -10,6 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($usuario && password_verify($senha, $usuario['senha'])) {
         echo "Login realizado com sucesso!";
+        header('Location: paginainicial.html');
+        exit();
     } else {
         echo "Email ou senha incorretos.";
     }
