@@ -6,15 +6,33 @@
         <title>Sistema de Tarefas</title> 
         <link rel="stylesheet" href="../css/pagininicial.css"> 
     </head> 
-    <body> 
-        <div class="container"> 
-            <header class="header"> 
-                <h1>Sistema de Gerenciamento de Tarefas</h1>  
-            </header>
-<section class="tasks-section"> 
-    <div class="section-header"> 
-        <h2>Minhas Tarefas de Hoje</h2> 
-            <button class="btn" data-status="status"> Status</button> 
+    <body>
+
+  <h1>Tarefas do Dia: <span id="dataAtual"></span></h1>
+
+  
+  <div class="filtros">
+    <button onclick="mostrarHoje()">Hoje</button>
+    <button onclick="mostrarTodas()">Todas</button>
+  </div>
+
+  <ul id="listaTarefas"></ul>
+
+   <button onclick="abrirModal()">Nova Tarefa</button>
+
+  <div id="modalTarefa" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="fecharModal()">&times;</span>
+      <h3 id="tituloModal">Nova Tarefa</h3>
+      <input type="text" id="inputNome" placeholder="Nome da tarefa">
+      <input type="date" id="inputData">
+      <select id="inputStatus">
+        <option value="Pendente">Pendente</option>
+        <option value="Concluída">Concluída</option>
+      </select>
+      <button onclick="salvarTarefa()">Salvar</button>
     </div>
-</section> </div>
-</body> </html>
+  </div>
+  <script src="../js/script.js"></script>
+</body>
+</html>
