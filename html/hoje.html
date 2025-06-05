@@ -18,19 +18,25 @@
 
   <ul id="listaTarefas"></ul>
 
-   <button onclick="abrirModal()">Nova Tarefa</button>
+  <button onclick="abrirModal()">Nova Tarefa</button>
 
   <div id="modalTarefa" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="fecharModal()">&times;</span>
+      <span class="close" onclick="fecharModal()"></span>
+      
       <h3 id="tituloModal">Nova Tarefa</h3>
+      
       <input type="text" id="inputNome" placeholder="Nome da tarefa">
+      
       <input type="date" id="inputData">
+      
       <select id="inputStatus">
         <option value="Pendente">Pendente</option>
         <option value="Concluída">Concluída</option>
       </select>
+      
       <button onclick="salvarTarefa()">Salvar</button>
+    
     </div>
   </div>
   <script src="../js/script.js"></script>
