@@ -3,11 +3,7 @@
     const dataFormatadaBR = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     document.getElementById('dataAtual').textContent = dataFormatadaBR;
 
-    let tarefas = [
-      { id: 1, nome: "Revisar matemática", status: "Pendente", data: dataAtualFormatada },
-      { id: 2, nome: "Enviar relatório", status: "Concluída", data: "2025-06-03" },
-      { id: 3, nome: "Estudar filosofia", status: "Pendente", data: dataAtualFormatada },
-    ];
+    let tarefas = []; 
 
     let tarefaEditandoId = null;
 
