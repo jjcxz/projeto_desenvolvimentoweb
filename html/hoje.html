@@ -7,15 +7,25 @@
         <link rel="stylesheet" href="../css/pagininicial.css"> 
         <link rel="stylesheet" href="https://getbootstrap.com.br/docs/4.1/getting-started/introduction/"> 
     </head> 
+    
     <body>
 
   <h1>Tarefas do Dia: <span id="dataAtual"></span></h1>
 
   
   <div class="filtros">
-    <button onclick="mostrarHoje()">Hoje</button>
-    <button onclick="mostrarTodas()">Todas</button>
-  </div>
+  <button onclick="mostrarHoje()">Hoje</button>
+  <button onclick="mostrarTodas()">Todas</button>
+  <select id="filtroPrioridades">
+    <option value="">Prioridades</option>
+    <option value="Urgente">Urgente</option>
+    <option value="Importante">Importante</option>
+    <option value="Normal">Normal</option>
+    <option value="Baixa">Baixa</option>
+  </select>
+</div>
+
+
 
   <ul id="listaTarefas"></ul>
 
@@ -30,15 +40,25 @@
       <input type="text" id="inputNome" placeholder="Nome da tarefa">
       
       <input type="date" id="inputData">
+
       <input type="text" id="inputDescricao" placeholder="Descrição da tarefa">
+      
+      <select id="inputPrioridades" >
+        <option value="Urgente">Urgente</option>
+        <option value="Importante">Importante</option>
+        <option value="Normal">Normal</option>
+        <option value="Baixa">Baixa</option>
+      </select>
 
       <select id="inputStatus">
         <option value="Pendente">Pendente</option>
         <option value="Concluída">Concluída</option>
       </select>
       
-      <button onclick="salvarTarefa()">Salvar</button>
-      <button onclick="cancelarTarefa()">Cancelar</button>
+      <div class="modal-botoes">
+          <button onclick="salvarTarefa()">Salvar</button>
+          <button onclick="cancelarTarefa()">Cancelar</button>
+      </div>
     </div>
   </div>
   <script src="../js/script.js"></script>
