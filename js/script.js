@@ -83,6 +83,7 @@
       const descricao = document.getElementById("inputDescricao").value;
       const prioridades = document.getElementById("inputPrioridades").value;
       const status = document.getElementById("inputStatus").value;
+      const tipo = document.getElementById("inputTipo").value;
 
       if (!nome || !data) {
         alert("Preencha todos os campos!");
@@ -97,6 +98,7 @@
           tarefas[index].descricao = descricao;
           tarefas[index].prioridades = prioridades;
           tarefas[index].status = status;
+          tarefas[index].tipo = tipo;
         }
 
       } else {
@@ -106,7 +108,8 @@
           data,
           descricao,
           prioridades,
-          status
+          status,
+          tipo
         };
         tarefas.push(novaTarefa);
       }
@@ -128,6 +131,7 @@
         document.getElementById("inputDescricao").value = tarefa.descricao;
         document.getElementById("inputPrioridades").value = tarefa.prioridades;
         document.getElementById("inputStatus").value = tarefa.status;
+        ddocument.getElementById("inputTipo").value = tarefa.tipo;
         document.getElementById("tituloModal").textContent = "Editar Tarefa";
         document.getElementById("modalTarefa").style.display = "block";
       }
