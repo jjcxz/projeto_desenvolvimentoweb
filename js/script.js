@@ -23,6 +23,11 @@
             <input type="checkbox" ${checked} onchange="marcarConcluida(${tarefa.id}, this.checked)">
             <span><strong>${tarefa.nome}</strong></span>
             <span>${formatarDataBR(tarefa.data)}</span>
+            <span>${tarefa.descricao}</span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
             <span>${tarefa.status}</span>
           </div>
           <div class="acoes">
@@ -48,6 +53,7 @@
       document.getElementById("modalTarefa").style.display = "block";
       document.getElementById("inputNome").value = "";
       document.getElementById("inputData").value = dataAtualFormatada;
+      document.getElementById("inputDescricao").value = "";
       document.getElementById("inputStatus").value = "Pendente";
       document.getElementById("tituloModal").textContent = "Nova Tarefa";
       tarefaEditandoId = null;
@@ -55,11 +61,13 @@
 
     function fecharModal() {
       document.getElementById("modalTarefa").style.display = "none";
+
     }
 
     function salvarTarefa() {
       const nome = document.getElementById("inputNome").value.trim();
       const data = document.getElementById("inputData").value;
+      const descricao = document.getElementById("inputDescricao").value;
       const status = document.getElementById("inputStatus").value;
 
       if (!nome || !data) {
@@ -72,6 +80,7 @@
         if (index !== -1) {
           tarefas[index].nome = nome;
           tarefas[index].data = data;
+          tarefa[index].descricao = descricao;
           tarefas[index].status = status;
         }
       } else {
@@ -79,6 +88,7 @@
           id: Date.now(),
           nome,
           data,
+          descricao,
           status
         };
         tarefas.push(novaTarefa);
@@ -88,12 +98,17 @@
       mostrarHoje();
     }
 
+    function cancelarTarefa(){
+      document.getElementById("modalTarefa").style.display = "none";
+    }
+
     function editarTarefa(id) {
       const tarefa = tarefas.find(t => t.id === id);
       if (tarefa) {
         tarefaEditandoId = id;
         document.getElementById("inputNome").value = tarefa.nome;
         document.getElementById("inputData").value = tarefa.data;
+        document.getElementById("inputDescricao").value = tarefa.descricao;
         document.getElementById("inputStatus").value = tarefa.status;
         document.getElementById("tituloModal").textContent = "Editar Tarefa";
         document.getElementById("modalTarefa").style.display = "block";
