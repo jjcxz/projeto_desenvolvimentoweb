@@ -83,6 +83,7 @@
           tarefa[index].descricao = descricao;
           tarefas[index].status = status;
         }
+        
       } else {
         const novaTarefa = {
           id: Date.now(),
