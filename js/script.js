@@ -7,6 +7,18 @@
 
     let tarefaEditandoId = null;
 
+    function filtroPorPrioridades(){
+      const prioridadeselecionada = document.getElementById("filtroPrioridades").value;
+
+      if(prioridadeselecionada === ""){
+        mostrarTodas()
+      return;
+    }
+    const filtradas = tarefas.filter(t => t.prioridades === prioridadeselecionada);
+    exibirTarefas(filtradas)
+  }
+
+
     function exibirTarefas(lista) {
       const ul = document.getElementById("listaTarefas");
       ul.innerHTML = "";
@@ -25,9 +37,9 @@
             <span>${formatarDataBR(tarefa.data)}</span>
             <span>${tarefa.descricao}</span>
             <span></span>
+            <span>${tarefa.prioridades}</span>
             <span></span>
-            <span></span>
-            <span></span>
+            <span></span> 
             <span>${tarefa.status}</span>
           </div>
           <div class="acoes">
@@ -54,6 +66,7 @@
       document.getElementById("inputNome").value = "";
       document.getElementById("inputData").value = dataAtualFormatada;
       document.getElementById("inputDescricao").value = "";
+      document.getElementById("inputPrioridades").value = "Urgente";
       document.getElementById("inputStatus").value = "Pendente";
       document.getElementById("tituloModal").textContent = "Nova Tarefa";
       tarefaEditandoId = null;
@@ -68,6 +81,7 @@
       const nome = document.getElementById("inputNome").value.trim();
       const data = document.getElementById("inputData").value;
       const descricao = document.getElementById("inputDescricao").value;
+      const prioridades = document.getElementById("inputPrioridades").value;
       const status = document.getElementById("inputStatus").value;
 
       if (!nome || !data) {
@@ -80,16 +94,18 @@
         if (index !== -1) {
           tarefas[index].nome = nome;
           tarefas[index].data = data;
-          tarefa[index].descricao = descricao;
+          tarefas[index].descricao = descricao;
+          tarefas[index].prioridades = prioridades;
           tarefas[index].status = status;
         }
-        
+
       } else {
         const novaTarefa = {
           id: Date.now(),
           nome,
           data,
           descricao,
+          prioridades,
           status
         };
         tarefas.push(novaTarefa);
@@ -110,6 +126,7 @@
         document.getElementById("inputNome").value = tarefa.nome;
         document.getElementById("inputData").value = tarefa.data;
         document.getElementById("inputDescricao").value = tarefa.descricao;
+        document.getElementById("inputPrioridades").value = tarefa.prioridades;
         document.getElementById("inputStatus").value = tarefa.status;
         document.getElementById("tituloModal").textContent = "Editar Tarefa";
         document.getElementById("modalTarefa").style.display = "block";
@@ -135,5 +152,5 @@
       const data = new Date(dataISO);
       return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     }
-
+    document.getElementById("filtroPrioridades").addEventListener("change", filtroPorPrioridades);
     window.onload = mostrarHoje;
