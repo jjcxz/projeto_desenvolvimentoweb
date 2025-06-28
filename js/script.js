@@ -185,8 +185,16 @@
       const data = new Date(dataISO);
       return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     }
-    document.getElementById("filtroPrioridades").addEventListener("change", filtroPorPrioridades);
-    window.onload = mostrarHoje;
 
-    document.getElementById("filtroTipos").addEventListener("change", filtroPorTipos);
-    window.onload = mostrarHoje;
+    function limparFiltros() {
+  document.getElementById("filtroTipos").value = "";
+  document.getElementById("filtroPrioridades").value = "";
+  
+  mostrarTodas();
+    }
+
+    window.onload = function() {
+  mostrarHoje();
+  document.getElementById("filtroPrioridades").addEventListener("change", filtroPorPrioridades);
+  document.getElementById("filtroTipos").addEventListener("change", filtroPorTipos);
+};
