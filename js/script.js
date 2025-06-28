@@ -3,12 +3,15 @@
     const dataFormatadaBR = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     document.getElementById('dataAtual').textContent = dataFormatadaBR;
 
-    let tarefas = []; 
-
     let tarefaEditandoId = null;
+
+    function obterTarefasSalvas() {
+      return JSON.parse(localStorage.getItem("tarefas")) || [];
+    }
 
     function filtroPorPrioridades(){
       const prioridadeselecionada = document.getElementById("filtroPrioridades").value;
+      const tarefas = obterTarefasSalvas();
 
       if(prioridadeselecionada === ""){
         mostrarTodas()
@@ -52,11 +55,13 @@
     }
 
     function mostrarHoje() {
+      const tarefas = obterTarefasSalvas();
       const hoje = tarefas.filter(t => t.data === dataAtualFormatada && t.status !== "Concluída");
       exibirTarefas(hoje);
     }
 
     function mostrarTodas() {
+      const tarefas = obterTarefasSalvas();
       const ordenadas = [...tarefas].sort((a, b) => b.data.localeCompare(a.data));
       exibirTarefas(ordenadas);
     }
@@ -88,7 +93,9 @@
       if (!nome || !data) {
         alert("Preencha todos os campos!");
         return;
-      }
+      } 
+      
+      const tarefas = obterTarefasSalvas();
 
       if (tarefaEditandoId !== null) {
         const index = tarefas.findIndex(t => t.id === tarefaEditandoId);
@@ -111,11 +118,16 @@
           status,
           tipo
         };
+        
         tarefas.push(novaTarefa);
       }
+        
+      localStorage.setItem("tarefas", JSON.stringify(tarefas));
+        alert("Tarefa salva/editada com sucesso!");
 
       fecharModal();
       mostrarHoje();
+      tarefaEditandoId = null;
     }
 
     function cancelarTarefa(){
@@ -123,6 +135,7 @@
     }
 
     function editarTarefa(id) {
+      const tarefas = obterTarefasSalvas();
       const tarefa = tarefas.find(t => t.id === id);
       if (tarefa) {
         tarefaEditandoId = id;
@@ -131,7 +144,7 @@
         document.getElementById("inputDescricao").value = tarefa.descricao;
         document.getElementById("inputPrioridades").value = tarefa.prioridades;
         document.getElementById("inputStatus").value = tarefa.status;
-        ddocument.getElementById("inputTipo").value = tarefa.tipo;
+        document.getElementById("inputTipo").value = tarefa.tipo;
         document.getElementById("tituloModal").textContent = "Editar Tarefa";
         document.getElementById("modalTarefa").style.display = "block";
       }
@@ -139,16 +152,19 @@
 
     function excluirTarefa(id) {
       if (confirm("Deseja realmente excluir esta tarefa?")) {
-        tarefas = tarefas.filter(t => t.id !== id);
-        mostrarHoje();
+        const tarefas = obterTarefasSalvas().filter(t => t.id !== id);
+       localStorage.setItem("tarefas", JSON.stringify(tarefas));
+       mostrarHoje();
       }
     }
 
     function marcarConcluida(id, concluida) {
+      const tarefas = obterTarefasSalvas();
       const tarefa = tarefas.find(t => t.id === id);
       if (tarefa) {
-        tarefa.status = concluida ? "Concluída" : "Pendente";
-        mostrarHoje();
+         tarefa.status = concluida ? "Concluída" : "Pendente";
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    mostrarHoje();
       }
     }
 
