@@ -10,9 +10,9 @@
     }
 
 
-    function filtroPorTipo(){
+    function filtroPorTipos(){
       const tarefas = obterTarefasSalvas();
-      const tipoSelecionado = document.getElementById("filtroTipo").value;
+      const tipoSelecionado = document.getElementById("filtroTipos").value;
 
       if(tipoSelecionado === ""){
         mostrarTodas()
@@ -55,7 +55,7 @@
             <span></span>
             <span>${tarefa.prioridades}</span>
             <span></span>
-            <span></span> 
+            <span>${tarefa.tipo}</span> 
             <span>${tarefa.status}</span>
           </div>
           <div class="acoes">
@@ -186,4 +186,7 @@
       return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     }
     document.getElementById("filtroPrioridades").addEventListener("change", filtroPorPrioridades);
+    window.onload = mostrarHoje;
+
+    document.getElementById("filtroTipos").addEventListener("change", filtroPorTipos);
     window.onload = mostrarHoje;
