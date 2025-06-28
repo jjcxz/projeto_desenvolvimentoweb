@@ -12,26 +12,26 @@ body {
 
 .login-container {
     background-color: #ffffff;
-    padding: 20px; /* Menos espaço interno */
+    padding: 20px; 
     border-radius: 12px;
     text-align: center;
-    width: 320px; /* Um pouco mais estreito */
-    height: auto; /* Altura automática (depende do conteúdo) */
+    width: 320px; 
+    height: auto; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    justify-content: center; 
 }
 
 .login-container h1 {
     margin-bottom: 10px;
     color: #4a4a4a;
-    font-size: 1.6em; /* Título um pouco menor */
+    font-size: 1.6em; 
 }
 
 .login-container input {
     padding: 8px;
-    margin-bottom: 10px; /* Menor espaçamento entre os campos */
+    margin-bottom: 10px; 
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 100%;
@@ -56,7 +56,7 @@ body {
 
 .login-container p {
     margin-top: 8px;
-    font-size: 0.85em; /* Texto menor */
+    font-size: 0.85em; 
 }
 
 .login-container a {
