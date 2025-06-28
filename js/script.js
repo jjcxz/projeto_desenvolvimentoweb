@@ -9,15 +9,28 @@
       return JSON.parse(localStorage.getItem("tarefas")) || [];
     }
 
-    function filtroPorPrioridades(){
-      const prioridadeselecionada = document.getElementById("filtroPrioridades").value;
-      const tarefas = obterTarefasSalvas();
 
-      if(prioridadeselecionada === ""){
+    function filtroPorTipo(){
+      const tarefas = obterTarefasSalvas();
+      const tipoSelecionado = document.getElementById("filtroTipo").value;
+
+      if(tipoSelecionado === ""){
+        mostrarTodas()
+        return;
+      }
+      const filtradas = tarefas.filter(t => t.tipo === tipoSelecionado);
+      exibirTarefas(filtradas)
+    }
+
+    function filtroPorPrioridades(){
+      const tarefas = obterTarefasSalvas();
+      const prioridadeSelecionada = document.getElementById("filtroPrioridades").value;
+
+      if(prioridadeSelecionada === ""){
         mostrarTodas()
       return;
     }
-    const filtradas = tarefas.filter(t => t.prioridades === prioridadeselecionada);
+    const filtradas = tarefas.filter(t => t.prioridades === prioridadeSelecionada);
     exibirTarefas(filtradas)
   }
 
