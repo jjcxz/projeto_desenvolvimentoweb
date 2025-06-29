@@ -10,29 +10,23 @@
     }
 
 
-    function filtroPorTipos(){
-      const tarefas = obterTarefasSalvas();
-      const tipoSelecionado = document.getElementById("filtroTipos").value;
+function aplicarFiltros() {
+  const tarefas = obterTarefasSalvas();
+  const tipoSelecionado = document.getElementById("filtroTipos").value;
+  const prioridadeSelecionada = document.getElementById("filtroPrioridades").value;
 
-      if(tipoSelecionado === ""){
-        mostrarTodas()
-        return;
-      }
-      const filtradas = tarefas.filter(t => t.tipo === tipoSelecionado);
-      exibirTarefas(filtradas)
-    }
+  let filtradas = tarefas;
 
-    function filtroPorPrioridades(){
-      const tarefas = obterTarefasSalvas();
-      const prioridadeSelecionada = document.getElementById("filtroPrioridades").value;
-
-      if(prioridadeSelecionada === ""){
-        mostrarTodas()
-      return;
-    }
-    const filtradas = tarefas.filter(t => t.prioridades === prioridadeSelecionada);
-    exibirTarefas(filtradas)
+  if (tipoSelecionado !== "") {
+    filtradas = filtradas.filter(t => t.tipo === tipoSelecionado);
   }
+
+  if (prioridadeSelecionada !== "") {
+    filtradas = filtradas.filter(t => t.prioridades === prioridadeSelecionada);
+  }
+
+  exibirTarefas(filtradas);
+}
 
 
     function exibirTarefas(lista) {
@@ -68,12 +62,15 @@
     }
 
     function mostrarHoje() {
+      resetarFiltrosVisuais();
+      
       const tarefas = obterTarefasSalvas();
       const hoje = tarefas.filter(t => t.data === dataAtualFormatada && t.status !== "Concluída");
       exibirTarefas(hoje);
     }
 
     function mostrarTodas() {
+      resetarFiltrosVisuais();
       const tarefas = obterTarefasSalvas();
       const ordenadas = [...tarefas].sort((a, b) => b.data.localeCompare(a.data));
       exibirTarefas(ordenadas);
@@ -139,7 +136,14 @@
         alert("Tarefa salva/editada com sucesso!");
 
       fecharModal();
-      mostrarHoje();
+
+      const pagina = window.location.pathname;
+      if (pagina.includes("hoje.html")) {
+        mostrarHoje();
+      } else {
+        mostrarTodas();
+      }
+
       tarefaEditandoId = null;
     }
 
@@ -177,24 +181,34 @@
       if (tarefa) {
          tarefa.status = concluida ? "Concluída" : "Pendente";
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
-    mostrarHoje();
+    mostrarconcluidas();
       }
     }
-
+ 
     function formatarDataBR(dataISO) {
       const data = new Date(dataISO);
       return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
     }
 
-    function limparFiltros() {
-  document.getElementById("filtroTipos").value = "";
-  document.getElementById("filtroPrioridades").value = "";
-  
-  mostrarTodas();
-    }
+function resetarFiltrosVisuais() {
+  const filtroTipos = document.getElementById("filtroTipos");
+  const filtroPrioridades = document.getElementById("filtroPrioridades");
 
-    window.onload = function() {
-  mostrarHoje();
-  document.getElementById("filtroPrioridades").addEventListener("change", filtroPorPrioridades);
-  document.getElementById("filtroTipos").addEventListener("change", filtroPorTipos);
+  if (filtroTipos) filtroTipos.value = "";
+  if (filtroPrioridades) filtroPrioridades.value = "";
+}
+
+  window.onload = function () {
+  const pagina = window.location.pathname;
+
+  if (pagina.includes("hoje.html")) {
+    mostrarHoje();
+  } else if (pagina.includes("todas.html")) {
+    mostrarTodas();
+  }
+
+  resetarFiltrosVisuais();
+
+  document.getElementById("filtroPrioridades").addEventListener("change", aplicarFiltros);
+  document.getElementById("filtroTipos").addEventListener("change", aplicarFiltros);
 };
