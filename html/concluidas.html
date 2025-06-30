@@ -9,13 +9,14 @@
     </head> 
     <body>
 
-  <h1>Tarefas Pendentes: <span id="dataAtual"></span></h1>
+  <h1>Tarefas Concluídas: <span id="dataAtual"></span></h1>
 
   
 
   <div class="filtros">
   <button onclick="window.location.href='hoje.html'">Hoje</button>
-  <button onclick="window.location.href='concluidas.html'">Concluídas</button>
+  <button onclick="window.location.href='todas.html'">Todas</button>
+ 
 
   <select id="filtroTipos">
   <option value=""> Todos os tipos </option>
@@ -24,13 +25,6 @@
   <option value="Lazer">Lazer</option>
 </select>
 
-<select id="filtroPrioridades">
-  <option value=""> Todas as prioridades </option>
-  <option value="Urgente">Urgente</option>
-  <option value="Importante">Importante</option>
-  <option value="Normal">Normal</option>
-  <option value="Baixa">Baixa</option>
-</select>
 
 </div>
 
@@ -52,13 +46,6 @@
 
       <input type="text" id="inputDescricao" placeholder="Descrição da tarefa">
       
-      <label for="inputPrioridades" style="font-size: 14px; margin-left: 10px; display: block; margin-bottom: 5px; color: #181818;">Nível de prioridade:</label>
-      <select id="inputPrioridades">
-        <option value="Urgente">Urgente</option>
-        <option value="Importante">Importante</option>
-        <option value="Normal">Normal</option>
-        <option value="Baixa">Baixa</option>
-      </select>
 
 
       <label for="inputTipo" style="font-size: 14px; margin-left: 10px; display: block; margin-bottom: 5px; color: #181818;">Tipo:</label>
