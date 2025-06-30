@@ -1,14 +1,23 @@
- const hoje = new Date();
-    const dataAtualFormatada = hoje.toISOString().split('T')[0];
-    const dataFormatadaBR = hoje.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-    document.getElementById('dataAtual').textContent = dataFormatadaBR;
+ // Corrigir fuso horário local para data atual
+function obterDataAtualFormatada() {
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  const dia = String(hoje.getDate()).padStart(2, '0');
+  return `${ano}-${mes}-${dia}`;
+}
 
-    let tarefaEditandoId = null;
+const dataAtualFormatada = obterDataAtualFormatada();
 
-    function obterTarefasSalvas() {
-      return JSON.parse(localStorage.getItem("tarefas")) || [];
-    }
+const hojeData = new Date();
+const dataFormatadaBR = hojeData.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+document.getElementById('dataAtual').textContent = dataFormatadaBR;
 
+let tarefaEditandoId = null;
+
+function obterTarefasSalvas() {
+  return JSON.parse(localStorage.getItem("tarefas")) || [];
+}
 
 function aplicarFiltros() {
   const tarefas = obterTarefasSalvas();
@@ -28,8 +37,7 @@ function aplicarFiltros() {
   exibirTarefas(filtradas);
 }
 
-
-   function exibirTarefas(lista) {
+function exibirTarefas(lista) {
   const ul = document.getElementById("listaTarefas");
   ul.innerHTML = "";
 
@@ -59,127 +67,119 @@ function aplicarFiltros() {
   });
 }
 
-
-    function mostrarHoje() {
-      resetarFiltrosVisuais();
-      
-      const tarefas = obterTarefasSalvas();
-const hoje = tarefas.filter(t => t.data === dataAtualFormatada && !t.concluida);
-      exibirTarefas(hoje);
-    }
-
+function mostrarHoje() {
+  resetarFiltrosVisuais();
+  const tarefas = obterTarefasSalvas();
+  const hoje = tarefas.filter(t => t.data === dataAtualFormatada && !t.concluida);
+  exibirPaginadas(hoje);
+}
 
 function mostrarTodas() {
   resetarFiltrosVisuais();
   const tarefas = obterTarefasSalvas();
-  const naoConcluidas = tarefas.filter(t => !t.concluida); // só tarefas NÃO concluídas
-  exibirTarefas(naoConcluidas);
+  const naoConcluidas = tarefas.filter(t => !t.concluida);
+  exibirPaginadas(naoConcluidas);
 }
 
- 
+function abrirModal() {
+  document.getElementById("modalTarefa").style.display = "block";
+  document.getElementById("inputNome").value = "";
+  document.getElementById("inputData").value = dataAtualFormatada;
+  document.getElementById("inputDescricao").value = "";
+  document.getElementById("inputPrioridades").value = "Urgente";
+  document.getElementById("tituloModal").textContent = "Nova Tarefa";
+  tarefaEditandoId = null;
+}
 
-    function abrirModal() {
-      document.getElementById("modalTarefa").style.display = "block";
-      document.getElementById("inputNome").value = "";
-      document.getElementById("inputData").value = dataAtualFormatada;
-      document.getElementById("inputDescricao").value = "";
-      document.getElementById("inputPrioridades").value = "Urgente";
-      document.getElementById("tituloModal").textContent = "Nova Tarefa";
-      tarefaEditandoId = null;
-    }
+function fecharModal() {
+  document.getElementById("modalTarefa").style.display = "none";
+}
 
-    function fecharModal() {
-      document.getElementById("modalTarefa").style.display = "none";
+function salvarTarefa() {
+  const nome = document.getElementById("inputNome").value.trim();
+  const data = document.getElementById("inputData").value;
+  const descricao = document.getElementById("inputDescricao").value;
+  const prioridades = document.getElementById("inputPrioridades").value;
+  const tipo = document.getElementById("inputTipo").value;
+  const concluida = false;
 
-    }
-
-    function salvarTarefa() {
-      const nome = document.getElementById("inputNome").value.trim();
-      const data = document.getElementById("inputData").value;
-      const descricao = document.getElementById("inputDescricao").value;
-      const prioridades = document.getElementById("inputPrioridades").value;
-      const tipo = document.getElementById("inputTipo").value;
-      const concluida = false;
-
-      if (!nome || !data) {
-        alert("Preencha todos os campos!");
-        return;
-      } 
-      
-      const tarefas = obterTarefasSalvas();
-
-      if (tarefaEditandoId !== null) {
-        const index = tarefas.findIndex(t => t.id === tarefaEditandoId);
-        if (index !== -1) {
-          tarefas[index].nome = nome;
-          tarefas[index].data = data;
-          tarefas[index].descricao = descricao;
-          tarefas[index].prioridades = prioridades;
-          tarefas[index].tipo = tipo;
-        }
-
-      } else {
-        const novaTarefa = {
-          id: Date.now(),
-          nome,
-          data,
-          descricao,
-          prioridades,
-          tipo
-        };
-        
-        tarefas.push(novaTarefa);
-      }
-        
-      localStorage.setItem("tarefas", JSON.stringify(tarefas));
-        alert("Tarefa salva/editada com sucesso!");
-
-      fecharModal();
-
-      const pagina = window.location.pathname;
-      if (pagina.includes("hoje.html")) {
-        mostrarHoje();
-      } else {
-        mostrarTodas();
-      }
-
-      tarefaEditandoId = null;
-    }
-
-    function cancelarTarefa(){
-      document.getElementById("modalTarefa").style.display = "none";
-    }
-
-    function editarTarefa(id) {
-      const tarefas = obterTarefasSalvas();
-      const tarefa = tarefas.find(t => t.id === id);
-      if (tarefa) {
-        tarefaEditandoId = id;
-        document.getElementById("inputNome").value = tarefa.nome;
-        document.getElementById("inputData").value = tarefa.data;
-        document.getElementById("inputDescricao").value = tarefa.descricao;
-        document.getElementById("inputPrioridades").value = tarefa.prioridades;
-        document.getElementById("inputTipo").value = tarefa.tipo;
-        document.getElementById("tituloModal").textContent = "Editar Tarefa";
-        document.getElementById("modalTarefa").style.display = "block";
-      }
-    }
-
-    function excluirTarefa(id) {
-      if (confirm("Deseja realmente excluir esta tarefa?")) {
-        const tarefas = obterTarefasSalvas().filter(t => t.id !== id);
-       localStorage.setItem("tarefas", JSON.stringify(tarefas));
-       mostrarHoje();
-      }
-    }
-function mostrarConcluidas() {
-  resetarFiltrosVisuais();
+  if (!nome || !data) {
+    alert("Preencha todos os campos!");
+    return;
+  }
 
   const tarefas = obterTarefasSalvas();
-  const concluidas = tarefas.filter(t => t.concluida === true);
-  exibirTarefas(concluidas);
+
+  if (tarefaEditandoId !== null) {
+    const index = tarefas.findIndex(t => t.id === tarefaEditandoId);
+    if (index !== -1) {
+      tarefas[index].nome = nome;
+      tarefas[index].data = data;
+      tarefas[index].descricao = descricao;
+      tarefas[index].prioridades = prioridades;
+      tarefas[index].tipo = tipo;
+    }
+  } else {
+    const novaTarefa = {
+      id: Date.now(),
+      nome,
+      data,
+      descricao,
+      prioridades,
+      tipo,
+      concluida
+    };
+
+    tarefas.push(novaTarefa);
+  }
+
+  localStorage.setItem("tarefas", JSON.stringify(tarefas));
+  alert("Tarefa salva/editada com sucesso!");
+  fecharModal();
+
+  const pagina = window.location.pathname;
+  if (pagina.includes("hoje.html")) {
+    mostrarHoje();
+  } else {
+    mostrarTodas();
+  }
+
+  tarefaEditandoId = null;
 }
 
+function cancelarTarefa() {
+  document.getElementById("modalTarefa").style.display = "none";
+}
+
+function editarTarefa(id) {
+  const tarefas = obterTarefasSalvas();
+  const tarefa = tarefas.find(t => t.id === id);
+  if (tarefa) {
+    tarefaEditandoId = id;
+    document.getElementById("inputNome").value = tarefa.nome;
+    document.getElementById("inputData").value = tarefa.data;
+    document.getElementById("inputDescricao").value = tarefa.descricao;
+    document.getElementById("inputPrioridades").value = tarefa.prioridades;
+    document.getElementById("inputTipo").value = tarefa.tipo;
+    document.getElementById("tituloModal").textContent = "Editar Tarefa";
+    document.getElementById("modalTarefa").style.display = "block";
+  }
+}
+
+function excluirTarefa(id) {
+  if (confirm("Deseja realmente excluir esta tarefa?")) {
+    const tarefas = obterTarefasSalvas().filter(t => t.id !== id);
+    localStorage.setItem("tarefas", JSON.stringify(tarefas));
+    mostrarHoje();
+  }
+}
+
+function mostrarConcluidas() {
+  resetarFiltrosVisuais();
+  const tarefas = obterTarefasSalvas();
+  const concluidas = tarefas.filter(t => t.concluida === true);
+  exibirPaginadas(concluidas);
+}
 
 function exibirTarefasConcluidas() {
   const tarefas = obterTarefasSalvas();
@@ -222,12 +222,10 @@ function marcarConcluida(id, estaConcluida) {
   }
 }
 
-
- 
-    function formatarDataBR(dataISO) {
-      const data = new Date(dataISO);
-      return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-    }
+function formatarDataBR(dataISO) {
+  const data = new Date(dataISO);
+  return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+}
 
 function resetarFiltrosVisuais() {
   const filtroTipos = document.getElementById("filtroTipos");
@@ -237,7 +235,71 @@ function resetarFiltrosVisuais() {
   if (filtroPrioridades) filtroPrioridades.value = "";
 }
 
-  window.onload = function () {
+
+
+let tarefasPaginadas = [];
+let paginaAtual = 1;
+const tarefasPorPagina = 5;
+
+function exibirPaginadas(lista) {
+  tarefasPaginadas = lista;
+  const inicio = (paginaAtual - 1) * tarefasPorPagina;
+  const fim = inicio + tarefasPorPagina;
+  const tarefasPagina = lista.slice(inicio, fim);
+  exibirTarefas(tarefasPagina);
+  renderizarControlesPaginacao();
+}
+
+function renderizarControlesPaginacao() {
+  const container = document.getElementById("paginacao");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const totalPaginas = Math.ceil(tarefasPaginadas.length / tarefasPorPagina);
+  if (totalPaginas <= 1) return;
+
+  // Botão "Anterior"
+  const liAnterior = document.createElement("li");
+  liAnterior.className = `page-item ${paginaAtual === 1 ? "disabled" : ""}`;
+  liAnterior.innerHTML = `<a class="page-link" href="#" tabindex="-1">&laquo; Anterior</a>`;
+  liAnterior.onclick = (e) => {
+    e.preventDefault();
+    if (paginaAtual > 1) {
+      paginaAtual--;
+      exibirPaginadas(tarefasPaginadas);
+    }
+  };
+  container.appendChild(liAnterior);
+
+  // Botões de página
+  for (let i = 1; i <= totalPaginas; i++) {
+    const li = document.createElement("li");
+    li.className = `page-item ${paginaAtual === i ? "active" : ""}`;
+    li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+    li.onclick = (e) => {
+      e.preventDefault();
+      paginaAtual = i;
+      exibirPaginadas(tarefasPaginadas);
+    };
+    container.appendChild(li);
+  }
+
+  // Botão "Próximo"
+  const liProximo = document.createElement("li");
+  liProximo.className = `page-item ${paginaAtual === totalPaginas ? "disabled" : ""}`;
+  liProximo.innerHTML = `<a class="page-link" href="#">Próximo &raquo;</a>`;
+  liProximo.onclick = (e) => {
+    e.preventDefault();
+    if (paginaAtual < totalPaginas) {
+      paginaAtual++;
+      exibirPaginadas(tarefasPaginadas);
+    }
+  };
+  container.appendChild(liProximo);
+}
+
+window.onload = function () {
   const pagina = window.location.pathname;
 
   if (pagina.includes("hoje.html")) {
@@ -256,4 +318,3 @@ function resetarFiltrosVisuais() {
   if (filtroPrioridades) filtroPrioridades.addEventListener("change", aplicarFiltros);
   if (filtroTipos) filtroTipos.addEventListener("change", aplicarFiltros);
 };
-
