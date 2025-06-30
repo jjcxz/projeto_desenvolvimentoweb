@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     </head> 
+
     <body>
 
   <h1>Tarefas Pendentes: <span id="dataAtual"></span></h1>
@@ -40,6 +41,10 @@
 
   <ul id="listaTarefas"></ul>
   <button type="button" class="btn btn-light" onclick="abrirModal()">Nova Tarefa</button>
+  <nav aria-label="Navegação de página exemplo">
+  <ul id="paginacao" class="pagination justify-content-center mt-4"></ul>
+</nav>
+ 
 
 
   <div id="modalTarefa" class="modal">
