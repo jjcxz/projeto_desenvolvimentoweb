@@ -5,16 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <title>Sistema de Tarefas</title> 
         <link rel="stylesheet" href="../css/pagininicial.css"> 
-   
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head> 
     <body>
 
   <h1>Tarefas do Dia: <span id="dataAtual"></span></h1>
 
   
-  <div class="filtros">
-  <button onclick="window.location.href='todas.html'">Todas</button>
-  <button onclick="window.location.href='concluidas.html'">Concluídas</button>
+   <div class="filtros">
+  <button type="button" class="btn btn-light" onclick="window.location.href='hoje.html'">Hoje</button>
+  <button type="button" class="btn btn-light" onclick="window.location.href= 'todas.html'">Todas</button>
+  <button type="button" class="btn btn-light" onclick="window.location.href= 'concluidas.html'">Concluídas</button>
 
   <select id="filtroTipos">
   <option value=""> Todos os tipos </option>
@@ -35,7 +36,7 @@
 
   <ul id="listaTarefas"></ul>
 
-  <button onclick="abrirModal()">Nova Tarefa</button>
+  <button type="button" class="btn btn-light" onclick="abrirModal()">Nova Tarefa</button>
 
   <div id="modalTarefa" class="modal">
     <div class="modal-content">

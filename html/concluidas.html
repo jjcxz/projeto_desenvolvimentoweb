@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <title>Sistema de Tarefas</title> 
         <link rel="stylesheet" href="../css/pagininicial.css"> 
-   
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head> 
     <body>
 
@@ -14,25 +14,17 @@
   
 
   <div class="filtros">
-  <button onclick="window.location.href='hoje.html'">Hoje</button>
-  <button onclick="window.location.href='todas.html'">Todas</button>
- 
-
-  <select id="filtroTipos">
-  <option value=""> Todos os tipos </option>
-  <option value="Escolar">Escolar</option>
-  <option value="Trabalho">Trabalho</option>
-  <option value="Lazer">Lazer</option>
-</select>
-
-
+  <button type="button" class="btn btn-light" onclick="window.location.href='hoje.html'">Hoje</button>
+  <button type="button" class="btn btn-light" onclick="window.location.href= 'todas.html'">Todas</button>
+  <button type="button" class="btn btn-light" onclick="window.location.href= 'concluidas.html'">Concluídas</button>
 </div>
 
+<ul id="listaTarefas"></ul>
 
+<nav aria-label="Navegação de página exemplo">
+  <ul id="paginacao" class="pagination justify-content-center mt-4"></ul>
+</nav>
 
-  <ul id="listaTarefas"></ul>
-
-  <button onclick="abrirModal()">Nova Tarefa</button>
 
   <div id="modalTarefa" class="modal">
     <div class="modal-content">
@@ -54,7 +46,12 @@
         <option value="Trabalho">Trabalho</option>
         <option value="Lazer">Lazer</option>
       </select>
-      
+ 
+     
+
+<button type="button" class="btn btn-light" onclick="abrirModal()">Nova Tarefa</button>
+
+
       <div class="modal-botoes">
           <button onclick="salvarTarefa()">Salvar</button>
           <button onclick="cancelarTarefa()">Cancelar</button>
