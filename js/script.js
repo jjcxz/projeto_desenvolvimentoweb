@@ -1,4 +1,3 @@
- // Corrigir fuso horário local para data atual
 function obterDataAtualFormatada() {
   const hoje = new Date();
   const ano = hoje.getFullYear();
@@ -10,7 +9,7 @@ function obterDataAtualFormatada() {
 const dataAtualFormatada = obterDataAtualFormatada();
 
 const hojeData = new Date();
-const dataFormatadaBR = hojeData.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
+const dataFormatadaBR = hojeData.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'America/Sao_Paulo' });
 document.getElementById('dataAtual').textContent = dataFormatadaBR;
 
 let tarefaEditandoId = null;
