@@ -45,6 +45,9 @@ function exibirTarefas(lista) {
     return;
   }
 
+  lista.sort((a, b) => new Date(a.data) - new Date(b.data));
+
+
   lista.forEach(tarefa => {
     const li = document.createElement("li");
     const checked = tarefa.concluida ? "checked" : "";
@@ -65,6 +68,7 @@ function exibirTarefas(lista) {
     ul.appendChild(li);
   });
 }
+
 
 function mostrarHoje() {
   resetarFiltrosVisuais();
