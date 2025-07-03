@@ -263,7 +263,6 @@ function renderizarControlesPaginacao() {
   const totalPaginas = Math.ceil(tarefasPaginadas.length / tarefasPorPagina);
   if (totalPaginas <= 1) return;
 
-  // Botão "Anterior"
   const liAnterior = document.createElement("li");
   liAnterior.className = `page-item ${paginaAtual === 1 ? "disabled" : ""}`;
   liAnterior.innerHTML = `<a class="page-link" href="#" tabindex="-1">&laquo; Anterior</a>`;
@@ -276,7 +275,6 @@ function renderizarControlesPaginacao() {
   };
   container.appendChild(liAnterior);
 
-  // Botões de página
   for (let i = 1; i <= totalPaginas; i++) {
     const li = document.createElement("li");
     li.className = `page-item ${paginaAtual === i ? "active" : ""}`;
@@ -289,7 +287,6 @@ function renderizarControlesPaginacao() {
     container.appendChild(li);
   }
 
-  // Botão "Próximo"
   const liProximo = document.createElement("li");
   liProximo.className = `page-item ${paginaAtual === totalPaginas ? "disabled" : ""}`;
   liProximo.innerHTML = `<a class="page-link" href="#">Próximo &raquo;</a>`;
