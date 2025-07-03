@@ -113,7 +113,7 @@ function salvarTarefa() {
     const index = tarefas.findIndex(t => t.id === tarefaEditandoId);
     if (index !== -1) {
       tarefas[index].nome = nome;
-      tarefas[index].data = data;
+      tarefas[index].data = dataFormatadaBR;
       tarefas[index].descricao = descricao;
       tarefas[index].prioridades = prioridades;
       tarefas[index].tipo = tipo;
@@ -169,7 +169,7 @@ function excluirTarefa(id) {
   if (confirm("Deseja realmente excluir esta tarefa?")) {
     const tarefas = obterTarefasSalvas().filter(t => t.id !== id);
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
-    mostrarHoje();
+    mostrarTodas();
   }
 }
 
@@ -223,6 +223,7 @@ function marcarConcluida(id, estaConcluida) {
 
 function formatarDataBR(dataISO) {
   const data = new Date(dataISO);
+  data.setDate(data.getDate() + 1); 
   return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
