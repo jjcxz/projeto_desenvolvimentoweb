@@ -14,18 +14,36 @@
 
   
    <div class="filtros">
-  <button type="button" class="btn btn-light" onclick="window.location.href='hoje.html'">Hoje</button>
-  <button type="button" class="btn btn-light" onclick="window.location.href= 'todas.html'">Todas</button>
-  <button type="button" class="btn btn-light" onclick="window.location.href= 'concluidas.html'">Concluídas</button>
+  <button type="button" class="btn btn-dark" onclick="window.location.href='hoje.html'">Hoje</button>
+  <button type="button" class="btn btn-dark" onclick="window.location.href= 'todas.html'">Todas</button>
+  <button type="button" class="btn btn-dark " onclick="window.location.href= 'concluidas.html'">Concluídas</button>
 
-  <select id="filtroTipos">
+  <select id="filtroTipos" style=" margin-top: 10px;
+  margin-right: 5px;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;  ">
   <option value=""> Todos os tipos </option>
   <option value="Escolar">Escolar</option>
   <option value="Trabalho">Trabalho</option>
   <option value="Lazer">Lazer</option>
 </select>
 
-<select id="filtroPrioridades">
+<select id="filtroPrioridades" style=" margin-top: 10px;
+margin-right: 5px;
+padding: 8px 15px;
+font-size: 14px;
+border: none;
+background-color: #ffffff;
+color: rgb(0, 0, 0);
+border-radius: 5px;
+cursor: pointer;
+transition: background 0.3s ease;">
   <option value=""> Todas as prioridades </option>
   <option value="Urgente">Urgente</option>
   <option value="Importante">Importante</option>
@@ -35,7 +53,7 @@
 </div>
 
   <ul id="listaTarefas"></ul>
-  <button type="button" class="btn btn-light" onclick="abrirModal()">Nova Tarefa</button>
+  <button type="button" class="btn btn-dark" onclick="abrirModal()">Nova Tarefa</button>
   <nav aria-label="Navegação de página exemplo">
   <ul id="paginacao" class="pagination justify-content-center mt-4"></ul>
 </nav>
@@ -72,8 +90,8 @@
       </select>
       
       <div class="modal-botoes">
-          <button onclick="salvarTarefa()">Salvar</button>
-          <button onclick="cancelarTarefa()">Cancelar</button>
+          <button onclick="salvarTarefa()" style="border-radius: 3px;">Salvar</button>
+          <button onclick="cancelarTarefa()" style="border-radius: 3px;">Cancelar</button>
       </div>
     </div>
   </div>

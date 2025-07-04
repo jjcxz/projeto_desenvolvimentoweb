@@ -265,7 +265,7 @@ function renderizarControlesPaginacao() {
 
   const liAnterior = document.createElement("li");
   liAnterior.className = `page-item ${paginaAtual === 1 ? "disabled" : ""}`;
-  liAnterior.innerHTML = `<a class="page-link" href="#" tabindex="-1">&laquo; Anterior</a>`;
+  liAnterior.innerHTML = `<a class="page-link" href="#" tabindex="-1">&laquo;</a>`;
   liAnterior.onclick = (e) => {
     e.preventDefault();
     if (paginaAtual > 1) {
@@ -289,7 +289,7 @@ function renderizarControlesPaginacao() {
 
   const liProximo = document.createElement("li");
   liProximo.className = `page-item ${paginaAtual === totalPaginas ? "disabled" : ""}`;
-  liProximo.innerHTML = `<a class="page-link" href="#">Próximo &raquo;</a>`;
+  liProximo.innerHTML = `<a class="page-link" href="#"> &raquo;</a>`;
   liProximo.onclick = (e) => {
     e.preventDefault();
     if (paginaAtual < totalPaginas) {
